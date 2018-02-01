@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+
+		<style>
+
+		* {
+			box-sizing: border-box;
+			font-family: 'Georgia', serif;
+		}
+
+		textarea {
+			/*position: fixed;
+			top: 0;
+			left: 0;
+			width: 18rem;
+			height: 100vh;
+			padding: 3rem 1rem 6rem 1rem;
+			border: 0 none;
+			background-color: #B93A2F;
+			color: white;
+			box-shadow: inset 0.4rem 0 0 darken(#B93A2F, 6%);
+			font-family: monospace;
+			font-size: 14px;
+			outline: none;
+			resize: none;
+			overflow-y: auto;*/
+		}
+
+		img {
+			width: calc(6.35cm * 0.95);
+			height: calc(8.80cm * 0.95);
+		}
+
+		#cards {
+			position: fixed;
+			top: 0;
+			left: 0;
+			z-index: -1
+		}
+
+		@media screen {
+			#cards {
+				position: fixed;
+				top: 0;
+				left: 15rem;
+			}
+			textarea {
+				position: fixed;
+				top: 0;
+				left: 0;
+				width: 15rem;
+				height: 100%;
+				resize: none;
+				padding: 1em 2em;
+			}
+		}
+
+		@media print {
+			.hide {
+				display: none;
+			}
+
+			body > * {
+				display: inline;
+
+			}
+
+			img {
+				margin: 0.1cm;
+			}
+
+			* {
+				page-break-inside: avoid;
+				page-break-after: avoid;
+			}
+		}
+
+
+		</style>
+
+		<script src="http://code.jquery.com/jquery-3.3.1.min.js"></script>
+		<script>
+
+			let requests = []
+
+			$(function() {
+
+
+
+
+				let $input = $('#input')
+				$input.select();
+
+				$(document).on('input propertychange', $input, function() {
+					console.log($input)
+					makeList();
+				})
+				makeList();
+			});
+
+			function makeList() {
+				// Kill existing requests
+				for (var i = 0; i < requests.length; i++) {
+					requests[i].abort();
+				}
+
+				// clear div
+				$('#cards').html('');
+				var input = $('#input').val().split(/\n/);
+				for (var i = 0; i < input.length; i++) {
+					getCard(input[i], (data) => {
+						$('#cards').append(data);
+					});
+				}
+			}
+
+			function getCard(card, cb) {
+				requests.push($.get('/card/' + card, function(data) {
+					console.log(data);
+					if (cb) cb('<img src="' + data + '">');
+				}));
+			}
+
+
+		</script>
+	</head>
+	<body>
+		<textarea class="hide" id="input" name="input" placeholder="Card Names" autocorrect="off" autocapitalize="off" spellcheck="false" autofocus>Opus
+Smoke
+ee</textarea>
+		<div id="cards"></div>
+	</body>
+</html>
