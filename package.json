@@ -1,0 +1,25 @@
+{
+  "name": "netrunnerproxies",
+  "version": "1.0.0",
+  "description": "app to generate netrunner proxies",
+  "main": "index.js",
+  "dependencies": {
+    "express": "^4.16.3",
+    "request": "^2.87.0",
+    "scrape-it": "^4.1.2"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ashbc/netrunnerproxies.git"
+  },
+  "author": "ashbc",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ashbc/netrunnerproxies/issues"
+  },
+  "homepage": "https://github.com/ashbc/netrunnerproxies#readme"
+}
